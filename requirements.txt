@@ -2,7 +2,6 @@ datetime
 streamlit-lottie
 langchain
 cohere
-random
 requests
 bs4
 PIL
