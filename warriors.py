@@ -21,7 +21,7 @@ def remove_last_line_from_string(s):
 co = cohere.Client(st.secrets["cohere_api"])
 
 # For local lottie file
-lottie_GSW = "C:\\Users\\Kingpin\\AAARex\\code\\streamlit\\PycharmProjects\\warriors\\GSW_Lottie.json"
+lottie_GSW = "GSW_Lottie.json"
 with open(lottie_GSW, "r") as f:
     gsw_lottie_data = json.load(f)
 
