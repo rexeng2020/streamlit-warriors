@@ -4,5 +4,5 @@ langchain
 cohere
 requests
 bs4
-PIL
+Pillow
 pandas
