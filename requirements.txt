@@ -1,5 +1,5 @@
 date
-streamlit_lottie
+streamlit-lottie
 json
 langchain
 cohere
