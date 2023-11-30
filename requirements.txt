@@ -1,0 +1,10 @@
+date
+streamlit_lottie
+json
+langchain
+cohere
+random
+requests
+bs4
+PIL
+pandas
