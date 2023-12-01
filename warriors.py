@@ -44,20 +44,20 @@ with st.container():
     st.write("---")
     left_column, right_column = st.columns(2)
     with left_column:
-        st.header("What's new with the Warriors?")
+
+        today = date.today()
+        formatted_date = today.strftime('%B %d, %Y')
+        print(formatted_date)
+
+        st.header(f"Latest News as of {formatted_date}")
         st.write("##")
 
-        with st.spinner("Loading the latest news..."):
+        with st.spinner("Getting the latest news..."):
 
             wrapper = DuckDuckGoSearchAPIWrapper(max_results=10)
             search = DuckDuckGoSearchResults(api_wrapper=wrapper)
 
-            today = date.today()
-            formatted_date = today.strftime('%B %d, %Y')
-            print(formatted_date)
-
-            rawInfo = search.run(f"Golden State Warriors news as of today {formatted_date}")
-            #rawInfo = search.run("Food truck business latest strategies")
+            rawInfo = search.run(f"Golden State Warriors latest news as of today {formatted_date}")
             sum_response = co.summarize(text = rawInfo,
                                 length='long',
                                 format='bullets',
