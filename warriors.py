@@ -53,7 +53,7 @@ if not firstTime:
         print(strLastStamp)
         lastStamp = datetime.strptime(strLastStamp.strip(), "%Y-%m-%d %H:%M:%S.%f")
         print(lastStamp)
-        if abs(datetime.now() - lastStamp) > dt.timedelta(hours = 1):
+        if abs(datetime.now() - lastStamp) > dt.timedelta(hours = 6):
            getNewData = True
         readableTimeFile.close()
 
