@@ -7,8 +7,8 @@ from streamlit_lottie import st_lottie
 import json
 
 # For the DuckDuckGo search results
-from langchain.utilities import DuckDuckGoSearchAPIWrapper
-from langchain.tools import DuckDuckGoSearchResults
+from langchain_community.utilities import DuckDuckGoSearchAPIWrapper
+from langchain_community.tools import DuckDuckGoSearchResults
 
 # For the LLM to perform summarization
 import cohere

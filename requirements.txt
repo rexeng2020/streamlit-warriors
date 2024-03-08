@@ -1,6 +1,6 @@
 datetime
 streamlit-lottie
-langchain
+langchain-community
 cohere
 requests
 bs4
