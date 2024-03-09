@@ -134,80 +134,82 @@ with st.container():
                     fileContent = file.read()
                     file.close()
                     st.write(fileContent)
+            
+                with st.spinner("Let's go get a sentiment..."):
+
+                    rawSentiment = ""
+
+                    if getNewData:
+                        examples=[
+                        Example("The order came 5 days early", "positive review"),
+                        Example("The item exceeded my expectations", "positive review"),
+                        Example("I ordered more for my friends", "positive review"),
+                        Example("I would buy this again", "positive review"),
+                        Example("I would recommend this to others", "positive review"),
+                        Example("The package was damaged", "negative review"),
+                        Example("The order is 5 days late", "negative review"),
+                        Example("The order was incorrect", "negative review"),
+                        Example("I want to return my item", "negative review"),
+                        Example("The item's material feels low quality", "negative review"),
+                        Example("The product was okay", "neutral review"),
+                        Example("I received five items in total", "neutral review"),
+                        Example("I bought it from the website", "neutral review"),
+                        Example("I used the product this morning", "neutral review"),
+                        Example("The product arrived yesterday", "neutral review")
+                        ]
+
+                        inputs=[
+                        sum_response.summary
+                        ]
+
+                        sentiment_response = co.classify(
+                        inputs=inputs,
+                        examples=examples,
+                        )
+                        # The slice at the end gets rid of the word "review"
+                        rawSentiment = sentiment_response.classifications[0].prediction[:-7]
+                        # Cache the sentiment!
+                        file = open("newestSentiment.txt", "w")
+                        file.seek(0)
+                        file.write(rawSentiment)
+                        file.truncate()
+                        file.close()
+                    else:
+                        # Read the cached sentiment!
+                        file = open("newestSentiment.txt", "r")
+                        fileContent = file.read()
+                        file.close()
+                        rawSentiment = fileContent
+
+                    if (rawSentiment == 'negative'):
+                        sentimentColor = "red"
+                    else:
+                        sentimentColor = "blue"
+                    st.header("Warriors sentiment is trending " +
+                            f":{sentimentColor}[{rawSentiment}].")
+
+                with right_column:
+
+                    import random
+                    import requests
+                    from bs4 import BeautifulSoup
+                    URL = st.secrets["photos_source"]
+                    r = requests.get(URL)
+
+                    soup = BeautifulSoup(r.content, features = 'lxml')  # If this line causes an error, run 'pip install html5lib' or install html5lib
+                    images = soup.select('div img')
+                    images_url = images[random.randint(5,8)]['src']
+                    img_data = requests.get(images_url).content
+                    with open('test.jpg', 'wb') as handler:
+                        handler.write(img_data)
+
+                    from PIL import Image
+                    image = Image.open('test.jpg')
+                    st.image(image, caption='')
+
             except Exception as e:
                 print("Rex: the exception is: ")
                 print(e)
+                
             finally:
                 pass
-            
-        with st.spinner("Let's go get a sentiment..."):
-
-            rawSentiment = ""
-
-            if getNewData:
-                examples=[
-                  Example("The order came 5 days early", "positive review"),
-                  Example("The item exceeded my expectations", "positive review"),
-                  Example("I ordered more for my friends", "positive review"),
-                  Example("I would buy this again", "positive review"),
-                  Example("I would recommend this to others", "positive review"),
-                  Example("The package was damaged", "negative review"),
-                  Example("The order is 5 days late", "negative review"),
-                  Example("The order was incorrect", "negative review"),
-                  Example("I want to return my item", "negative review"),
-                  Example("The item's material feels low quality", "negative review"),
-                  Example("The product was okay", "neutral review"),
-                  Example("I received five items in total", "neutral review"),
-                  Example("I bought it from the website", "neutral review"),
-                  Example("I used the product this morning", "neutral review"),
-                  Example("The product arrived yesterday", "neutral review")
-                ]
-
-                inputs=[
-                  sum_response.summary
-                ]
-
-                sentiment_response = co.classify(
-                  inputs=inputs,
-                  examples=examples,
-                )
-                # The slice at the end gets rid of the word "review"
-                rawSentiment = sentiment_response.classifications[0].prediction[:-7]
-                # Cache the sentiment!
-                file = open("newestSentiment.txt", "w")
-                file.seek(0)
-                file.write(rawSentiment)
-                file.truncate()
-                file.close()
-            else:
-                # Read the cached sentiment!
-                file = open("newestSentiment.txt", "r")
-                fileContent = file.read()
-                file.close()
-                rawSentiment = fileContent
-
-            if (rawSentiment == 'negative'):
-                sentimentColor = "red"
-            else:
-                sentimentColor = "blue"
-            st.header("Warriors sentiment is trending " +
-                     f":{sentimentColor}[{rawSentiment}].")
-
-    with right_column:
-
-        import random
-        import requests
-        from bs4 import BeautifulSoup
-        URL = st.secrets["photos_source"]
-        r = requests.get(URL)
-
-        soup = BeautifulSoup(r.content, features = 'lxml')  # If this line causes an error, run 'pip install html5lib' or install html5lib
-        images = soup.select('div img')
-        images_url = images[random.randint(5,8)]['src']
-        img_data = requests.get(images_url).content
-        with open('test.jpg', 'wb') as handler:
-            handler.write(img_data)
-
-        from PIL import Image
-        image = Image.open('test.jpg')
-        st.image(image, caption='')
