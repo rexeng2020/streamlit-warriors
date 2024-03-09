@@ -1,6 +1,9 @@
 datetime
 streamlit-lottie
-langchain_community
+langchain
+langchain-community
+langchain-core
+langchain-text-splitters
 cohere
 requests
 bs4

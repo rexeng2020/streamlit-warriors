@@ -107,33 +107,38 @@ with st.container():
 
         with st.spinner("Getting the latest news..."):
 
-            if getNewData:
-                wrapper = DuckDuckGoSearchAPIWrapper(max_results=10)
-                search = DuckDuckGoSearchResults(api_wrapper=wrapper)
+            try:
+                if getNewData:
+                    wrapper = DuckDuckGoSearchAPIWrapper(max_results=10)
+                    search = DuckDuckGoSearchResults(api_wrapper=wrapper)
 
-                rawInfo = search.run(f"Golden State Warriors latest news as of today {formatted_date}")
-                sum_response = co.summarize(text = rawInfo,
-                                    length='long',
-                                    format='bullets',
-                                    model='summarize-xlarge',
-                                    additional_command='',
-                                    temperature=1.0,)
-                cleanedSummary = remove_last_line_from_string(sum_response.summary)
-                st.write(cleanedSummary)
+                    rawInfo = search.run(f"Golden State Warriors latest news as of today {formatted_date}")
+                    sum_response = co.summarize(text = rawInfo,
+                                        length='long',
+                                        format='bullets',
+                                        model='summarize-xlarge',
+                                        additional_command='',
+                                        temperature=1.0,)
+                    cleanedSummary = remove_last_line_from_string(sum_response.summary)
+                    st.write(cleanedSummary)
 
-                # Cache the summary!
-                file = open("newestSummary.txt", "w")
-                file.seek(0)
-                file.write(cleanedSummary)
-                file.truncate()
-                file.close()
-            else:
-                # Read the cached summary!
-                file = open("newestSummary.txt", "r")
-                fileContent = file.read()
-                file.close()
-                st.write(fileContent)
-
+                    # Cache the summary!
+                    file = open("newestSummary.txt", "w")
+                    file.seek(0)
+                    file.write(cleanedSummary)
+                    file.truncate()
+                    file.close()
+                else:
+                    # Read the cached summary!
+                    file = open("newestSummary.txt", "r")
+                    fileContent = file.read()
+                    file.close()
+                    st.write(fileContent)
+            except Exception as e:
+                print("Rex: exception is: " + e)
+            finally:
+                pass
+            
         with st.spinner("Let's go get a sentiment..."):
 
             rawSentiment = ""
