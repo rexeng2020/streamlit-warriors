@@ -1,2 +1,6 @@
 test.jpg
 .streamlit/secrets.toml
+timestamps.csv
+newestSentiment.txt
+newestSummary.txt
+
