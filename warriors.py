@@ -135,7 +135,8 @@ with st.container():
                     file.close()
                     st.write(fileContent)
             except Exception as e:
-                print("Rex: exception is: " + e)
+                print("Rex: the exception is: ")
+                print(e)
             finally:
                 pass
             
