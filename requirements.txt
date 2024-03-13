@@ -10,3 +10,4 @@ bs4
 Pillow
 pandas
 duckduckgo_search
+importlib-metadata==6.11.0
