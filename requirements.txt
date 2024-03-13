@@ -5,7 +5,7 @@ langchain
 langchain-community
 langchain-core
 langchain-text-splitters
-cohere
+cohere<=4.10
 requests
 bs4
 Pillow
