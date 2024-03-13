@@ -1,3 +1,4 @@
+importlib-metadata<=6.11.0
 datetime
 streamlit-lottie
 langchain
@@ -10,4 +11,3 @@ bs4
 Pillow
 pandas
 duckduckgo_search
-importlib-metadata==6.11.0
